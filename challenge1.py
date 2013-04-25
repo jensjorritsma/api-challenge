@@ -14,7 +14,7 @@ def build(name,num,flavor,image):
         server_name = name + str(n)
         server = cs.servers.create(server_name,image.id,flavor.id)
         servers.append(server)
-        n = n + 1
+        n += 1
     time.sleep(60)
     for server in servers:
         server.get()
