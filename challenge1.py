@@ -2,7 +2,7 @@
 import pyrax
 import time
 
-pyrax.set_credential_file(".creds")
+pyrax.set_credential_file("~/.rackspace_cloud_credentials")
 cs = pyrax.cloudservers
 
 def build(name,num,flavor,image):
