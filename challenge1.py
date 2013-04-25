@@ -11,6 +11,7 @@ def build(name,num,flavor,image):
     image = [img for img in cs.images.list() if image in img.name][0]
     n = 1
     servers = []
+
     while n <= num:
         server_name = name + str(n)
         server = cs.servers.create(server_name,image.id,flavor.id)
@@ -26,5 +27,6 @@ def build(name,num,flavor,image):
         print "Status: ", server.status
         print "Password: ", server.adminPass
         print "Networks: ", server.networks["public"]
+        print
 
 build("apitest",3,512,"CentOS 6.3")
