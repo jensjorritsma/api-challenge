@@ -1,8 +1,9 @@
 #!/usr/bin/python
 import pyrax
 import time
+import os
 
-pyrax.set_credential_file("~/.rackspace_cloud_credentials")
+pyrax.set_credential_file(os.path.expanduser("~/.rackspace_cloud_credentials"))
 cs = pyrax.cloudservers
 
 def build(name,num,flavor,image):
@@ -15,12 +16,15 @@ def build(name,num,flavor,image):
         server = cs.servers.create(server_name,image.id,flavor.id)
         servers.append(server)
         n += 1
-    time.sleep(60)
+        time.sleep(30)
+
     for server in servers:
-        server.get()
+        while server.status != "ACTIVE":
+            server.get()
+            time.sleep(10)
         print "Name: ", server.name
         print "Status: ", server.status
         print "Password: ", server.adminPass
         print "Networks: ", server.networks["public"]
 
-build("test",3,512,"CentOS 6.3")
+build("apitest",3,512,"CentOS 6.3")
